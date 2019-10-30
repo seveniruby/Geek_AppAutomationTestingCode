@@ -1,0 +1,7 @@
+- id: home_search
+  get: text
+- id: search_input_text
+  input: alibaba
+- id: name
+- id: current_price
+  get: text
