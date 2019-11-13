@@ -22,6 +22,9 @@ class TestDemo:
         caps["appPackage"] = "com.xueqiu.android"
         caps["appActivity"] = ".view.WelcomeActivityAlias"
         caps["autoGrantPermissions"] = "true"
+        caps["udid"] = "emulator-5556"
+        caps["chromedriverExecutable"]="/Users/seveniruby/projects/chromedriver/2.20/chromedriver"
+        caps["showChromedriverLog"]=True
 
         self.driver = webdriver.Remote("http://localhost:4723/wd/hub", caps)
         self.driver.implicitly_wait(10)
@@ -47,7 +50,7 @@ class TestDemo:
                 return False
 
         try:
-            WebDriverWait(self.driver, 20).until(loaded)
+            WebDriverWait(self.driver, 10).until(loaded)
         except:
             print("no update")
 
@@ -95,7 +98,30 @@ class TestDemo:
         TestCase("testcase.yaml").run(self.driver)
 
 
+    def test_webview(self):
+        self.driver.find_element_by_xpath("//*[@text='交易']").click()
+        for i in range(5):
+            sleep(1)
+            print(self.driver.contexts)
+
+        self.driver.find_element_by_accessibility_id("A股开户").click()
+
+    def test_webview_api_23(self):
+        self.driver.find_element_by_xpath("//*[@text='交易']").click()
+        for i in range(5):
+            print(self.driver.contexts)
+
+        self.driver.find_element_by_accessibility_id("A股开户").click()
+        self.driver.switch_to.context(self.driver.contexts[1])
+        print(self.driver.current_context)
+        WebDriverWait(self.driver, 20)\
+            .until(expected_conditions.visibility_of_element_located((By.ID, "phone-number")))
+        self.driver.find_element_by_id("phone-number").send_keys("15600534760")
+
+
+
     def teardown(self):
+        sleep(20)
         self.driver.quit()
 
 class TestCase:
