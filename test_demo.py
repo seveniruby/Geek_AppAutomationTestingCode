@@ -4,12 +4,14 @@ from time import sleep
 import pytest
 import yaml
 from appium import webdriver
-from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from hamcrest import *
+
+from page.search_page import SearchPage
+
 
 class TestDemo:
     search_data=yaml.safe_load(open("search.yaml", "r"))
@@ -22,7 +24,7 @@ class TestDemo:
         caps["appPackage"] = "com.xueqiu.android"
         caps["appActivity"] = ".view.WelcomeActivityAlias"
         caps["autoGrantPermissions"] = "true"
-        caps["udid"] = "emulator-5556"
+        #caps["udid"] = "emulator-5556"
         caps["chromedriverExecutable"]="/Users/seveniruby/projects/chromedriver/2.20/chromedriver"
         caps["showChromedriverLog"]=True
 
@@ -50,7 +52,7 @@ class TestDemo:
                 return False
 
         try:
-            WebDriverWait(self.driver, 10).until(loaded)
+            WebDriverWait(self.driver, 20).until(loaded)
         except:
             print("no update")
 
@@ -119,10 +121,19 @@ class TestDemo:
         self.driver.find_element_by_id("phone-number").send_keys("15600534760")
 
 
+    def test_search_po(self):
+
+        search_page= SearchPage(self.driver)
+        search_page.search("alibaba")
+
+        assert search_page.get_current_price() > 10
+
+
 
     def teardown(self):
         sleep(20)
         self.driver.quit()
+
 
 class TestCase:
     def __init__(self, path):
