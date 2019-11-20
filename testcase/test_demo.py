@@ -1,18 +1,4 @@
-import datetime
-from time import sleep
-
-import pytest
-import yaml
-from appium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
-from hamcrest import *
-
 from page.app import App
-from page.search_page import SearchPage
-
 
 class TestDemo:
 

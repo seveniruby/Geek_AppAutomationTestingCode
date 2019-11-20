@@ -25,7 +25,7 @@ class TestDemo:
         caps["appActivity"] = ".view.WelcomeActivityAlias"
         caps["autoGrantPermissions"] = "true"
         #caps["udid"] = "emulator-5556"
-        caps["chromedriverExecutable"]="/Users/seveniruby/projects/chromedriver/2.20/chromedriver"
+        caps["chromedriverExecutableDir"]="/Users/seveniruby/projects/chromedriver/2.20/"
         caps["showChromedriverLog"]=True
 
         self.driver = webdriver.Remote("http://localhost:4723/wd/hub", caps)
@@ -74,7 +74,7 @@ class TestDemo:
     ])
     def test_search(self, keyword, expected_price):
         self.driver.find_element_by_id("com.xueqiu.android:id/home_search").click()
-        self.driver.find_element_by_id("com.xueqiu.android:id/search_input_text").send_keys(keyword)
+        self.driver.find_element_by_id("search_input_text").send_keys(keyword)
         self.driver.find_element_by_id("name").click()
 
         price=self.driver.find_element_by_id("current_price")
@@ -129,9 +129,8 @@ class TestDemo:
         assert search_page.get_current_price() > 10
 
 
-
     def teardown(self):
-        sleep(20)
+        sleep(200)
         self.driver.quit()
 
 
