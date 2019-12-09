@@ -13,12 +13,13 @@ class TestDemo(TestCase):
         caps["autoGrantPermissions"] = "true"
         caps['unicodeKeyboard']=True
 
-        self.driver = webdriver.Remote("http://localhost:4723/wd/hub", caps)
-        self.driver.implicitly_wait(10)
+        # self.driver = webdriver.Remote("http://localhost:4723/wd/hub", caps)
+        self.driver = webdriver.Remote("http://10.2.10.201:4444/wd/hub", caps)
+        self.driver.implicitly_wait(20)
 
     def test_demo(self):
         el1 = self.driver.find_element_by_id("com.xueqiu.android:id/home_search")
-        el1.click()
+        self.click = el1.click()
         el2 = self.driver.find_element_by_id("com.xueqiu.android:id/search_input_text")
         el2.send_keys("pdd")
 

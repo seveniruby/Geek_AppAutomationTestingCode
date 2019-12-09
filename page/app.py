@@ -1,4 +1,5 @@
 import datetime
+import os
 
 from appium import webdriver
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -19,11 +20,15 @@ class App:
         caps["appActivity"] = ".view.WelcomeActivityAlias"
         caps["autoGrantPermissions"] = "true"
         #caps["udid"] = "emulator-5556"
+        udid=os.getenv("UDID", None)
+        if udid!=None:
+            caps["udid"]=udid
+            print("udid=%s" % udid)
         caps["chromedriverExecutable"]="/Users/seveniruby/projects/chromedriver/2.20/chromedriver"
         caps["showChromedriverLog"]=True
 
         cls.driver = webdriver.Remote("http://localhost:4723/wd/hub", caps)
-        cls.driver.implicitly_wait(10)
+        cls.driver.implicitly_wait(5)
 
         # sleep(20)
         # if len(self.driver.find_elements_by_id("image_cancel")) >=1:
